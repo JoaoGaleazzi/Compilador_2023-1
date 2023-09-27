@@ -8,7 +8,6 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -18,6 +17,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
@@ -102,7 +103,6 @@ public class Tela extends JFrame {
 		JButton btnAbrir = new JButton("Abrir [ctrl-o]");
 		btnAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	            txtaEditor.setText("testando");
 				if (e.getSource() == btnAbrir) {
 			        int returnVal = fc.showOpenDialog(btnAbrir);
 	
@@ -117,14 +117,12 @@ public class Tela extends JFrame {
 							while((textoAtual = br.readLine()) != null){
 								texto += textoAtual;
 							}
+                            br.close();
 						} catch (FileNotFoundException e2) {
-						    System.out.println("haha");
-							// TODO Auto-generated catch block
+                            txtaMensagens.setText("Arquivo não encontrado");
 							e2.printStackTrace();
 						} catch (IOException e1) {
-						    System.out.println("HAHA");
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						    txtaMensagens.setText("Excessão não esperada");
 						}
 			            txtaEditor.setText(texto);
 			            lblStatus.setText("Opening: " + file.getName() + " -- on path: " + file.getAbsolutePath());
@@ -163,6 +161,25 @@ public class Tela extends JFrame {
 		btnRecortar.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
 		JButton btnCompilar = new JButton("Compilar [F7]");
+        btnCompilar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String texto = txtaEditor.getText();
+                Lexico lexico = new Lexico();
+                lexico.setInput(new StringReader(texto));
+
+                try {
+                    Token token =  lexico.nextToken();
+                    while(token != null){
+                        token = lexico.nextToken();
+                    }
+                    txtaMensagens.setText("programa compilado com sucesso :)");
+                } catch (LexicalError ex) {
+                    String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
+                    txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
+			    }
+            }
+		});
+        
 		btnCompilar.setBounds(616, 0, 99, 60);
 		btnCompilar.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
@@ -180,4 +197,9 @@ public class Tela extends JFrame {
 		painelBarraDeFerramentas.add(btnEquipe);
 		contentPane.setLayout(gl_contentPane);
 	}
+
+    private long contarOcorrencias(String Texto, String alvo) {
+    
+    return Pattern.compile(alvo).matcher(Texto).results().count();
+    }
 }
