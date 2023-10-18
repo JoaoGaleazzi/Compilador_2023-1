@@ -8,7 +8,7 @@ SemanticName = Semantico
 ScannerCaseSensitive = true
 ScannerTable = Compact
 Input = Stream
-Parser = SLR
+Parser = LL
 #RegularDefinitions
 
 mai: [A-Z]
@@ -35,7 +35,7 @@ constante_float: {inteiro}\.({dig}+[1-9]|{dig})
 //constante_string
 constante_string: \"([^\n\"\\%]|%i|%f|%s|%b)*\"
 
-//relação das palavras reservadas
+//relacao das palavras reservadas
 //do else false fun if in main out repeat true  while
 
 do = palavra_reservada: "do"
@@ -51,7 +51,7 @@ true = palavra_reservada: "true"
 while = palavra_reservada: "while"
 
 
-//relação dos símbolos especiais
+//relacao dos simbolos especiais
 //& | ! , ; = : ( ) { } == != < > + - * /
 "&": "&"
 "|": "|"
@@ -73,10 +73,10 @@ while = palavra_reservada: "while"
 "*": "*"
 "/": "/"
 
-//reconhecer e ignorar caracteres de formatação
+//reconhecer e ignorar caracteres de formatacao
 :[\s\t\n\r]
 
-//reconhecer e ignorar comentários
+//reconhecer e ignorar comentarios
 :#[^\n]*
 :\[([^\[\]])*\]
 #NonTerminals
@@ -84,10 +84,12 @@ while = palavra_reservada: "while"
 <lista_de_instrucoes>
 <instrucao>
 <instrucao_>
+<instrucao__>
 <declaracao_de_constante>
 <declaracao_de_variaveis>
 <comando>
 <lista_de_identificadores>
+<lista_de_identificadores_>
 <valor>
 <comando_atribuicao>
 <comando_entrada_dados>
@@ -100,21 +102,34 @@ while = palavra_reservada: "while"
 <lista_expressoes>
 <lista_expressoes_>
 <lista_de_comandos>
+<lista_de_comandos_>
 <comando_else>
 <comando_while>
 <comando_repeat>
+<expressao>
+<expressao_>
+<elemento>
+<relacional>
+<relacional_>
+<operador_relacional>
+<aritmetica>
+<aritmetica_>
+<termo>	
+<termo_>	
+<fator>
 #Grammar
 <programa> ::= fun main "{" <lista_de_instrucoes> "}" ;
 
 <lista_de_instrucoes> ::= <instrucao> ";"<instrucao_>;
 
-<instrucao> ::= <declaracao_de_constante> | <declaracao_de_variaveis> | <comando>;
-<instrucao_> ::= <instrucao> <instrucao_> | î;
+<instrucao> ::= <declaracao_de_variaveis> <instrucao__> | <comando_entrada_dados> | <comando_saida_dados> | <comando_selecao> | <comando_repeticao>;
+<instrucao_> ::= <instrucao> ";" <instrucao_> | î;
+<instrucao__> ::= <declaracao_de_constante> | "=" <expressao> | î;
 
-<declaracao_de_constante> ::= <lista_de_identificadores> ":" <valor>;
+<declaracao_de_constante> ::= ":" <valor>;
 
 <lista_de_identificadores> ::= identificador <lista_de_identificadores_>;
-<lista_de_identificadores_> :: "," identificador <lista_de_identificadores_> | î;
+<lista_de_identificadores_> ::= "," identificador <lista_de_identificadores_> | î;
 
 <valor> ::= constante_int | constante_float | constante_string | true | false;
 
@@ -143,4 +158,28 @@ while = palavra_reservada: "while"
 
 <comando_repeticao> ::= <comando_while> | <comando_repeat>;
 <comando_while> ::= while "(" <expressao> ")" do "{" <lista_de_comandos> "}";
-<comando_repeat> ::= repeat "{" <lista_de_comandos> " ]" while "(" <expressao> ")";
+<comando_repeat> ::= repeat "{" <lista_de_comandos> "}" while "(" <expressao> ")";
+
+<expressao>			::= <elemento> <expressao_>  ;
+<expressao_>			::= î | "&" <elemento> <expressao_> | "|" <elemento> <expressao_> ;
+<elemento>			::= <relacional> | true | false | "!" <elemento> ;
+
+<relacional>			::= <aritmetica> <relacional_> ;
+<relacional_>			::= î | <operador_relacional> <aritmetica> ;
+<operador_relacional>	::= "==" | "!=" | "<" | ">" ;
+
+<aritmetica>			::= <termo> <aritmetica_>  ;
+<aritmetica_>			::= î | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
+
+<termo>			::= <fator> <termo_> ;
+<termo_>			::= î | "*" <fator> <termo_> | "/" <fator> <termo_> ;
+
+<fator>			::= identificador | 
+			    	    constante_int | 
+		   	    	    constante_float | 
+			    	    constante_string | 
+		   	    	    "(" <expressao> ")" |
+	    	  	    	    "+" <fator> | 
+	    		    	    "-" <fator> ;
+
+

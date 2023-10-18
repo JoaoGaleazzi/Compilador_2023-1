@@ -164,19 +164,54 @@ public class Tela extends JFrame {
         btnCompilar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String texto = txtaEditor.getText();
-                Lexico lexico = new Lexico();
-                lexico.setInput(new StringReader(texto));
+                
+				Lexico lexico = new Lexico();
+				Sintatico sintatico = new Sintatico();
+				Semantico semantico = new Semantico();
 
-                try {
+				lexico.setInput( texto );
+
+				try
+				{
+					sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
+				}
+				// mensagem: programa compilado com sucesso - área reservada para mensagens
+		
+				catch ( LexicalError ex )
+				{
+					//Trata erros léxicos, conforme especificação da parte 2 - do compilador
+				}
+				catch ( SyntaticError ex )
+				{
+		     		System.out.println(ex.getPosition() + " símbolo encontrado: na entrada " + ex.getMessage()); 
+			 
+					//Trata erros sintáticos
+					//linha 				sugestão: converter getPosition em linha
+					//símbolo encontrado    sugestão: implementar um método getToken no sintatico
+					//mensagem - símbolos esperados,   alterar ParserConstants.java, String[] PARSER_ERROR		
+				}
+				catch ( SemanticError ex )
+				{
+					//Trata erros semânticos
+				}
+				
+				
+				/*Lexico lexico = new Lexico();
+                lexico.setInput(texto);
+
+                try 
+				{
                     Token token =  lexico.nextToken();
                     while(token != null){
                         token = lexico.nextToken();
                     }
                     txtaMensagens.setText("programa compilado com sucesso :)");
-                } catch (LexicalError ex) {
+                } 
+				catch (LexicalError ex) 
+				{
                     String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
                     txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
-			    }
+			    }*/
             }
 		});
         
