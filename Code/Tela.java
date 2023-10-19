@@ -173,9 +173,9 @@ public class Tela extends JFrame {
 
 				try
 				{
-					sintatico.parse(lexico, semantico);    // tradução dirigida pela sintaxe
+					sintatico.parse(lexico, semantico);
+                    txtaMensagens.setText("Programa compilado com sucesso");
 				}
-				// mensagem: programa compilado com sucesso - área reservada para mensagens
 		
 				catch ( LexicalError ex )
 				{
