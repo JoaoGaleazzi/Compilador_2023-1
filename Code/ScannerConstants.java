@@ -1060,12 +1060,10 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
     {
-        //"Caractere n�o esperado",v
-        "símbolo não reconhecido",
+        "Caractere n�o esperado",
         "",
         "",
-        //"Erro identificando constante_string",v
-        "",
+        "Erro identificando constante_string",
         "",
         "",
         "",
@@ -1083,28 +1081,24 @@ public interface ScannerConstants
         "",
         "",
         "Erro identificando <ignorar>",
-        //"Erro identificando identificador",v
-        "sequência não reconhecida",
+        "Erro identificando identificador",
         "",
         "",
         "",
         "",
         "",
         "",
-        //"Erro identificando constante_string",v
-        "",
+        "Erro identificando constante_string",
         "Erro identificando constante_float",
         "",
         "",
-        //"Erro identificando identificador",v
-        "sequência não reconhecida",
+        "Erro identificando identificador",
         "",
         "",
         "",
         "Erro identificando constante_float",
         "",
-        //"Erro identificando identificador",v
-        "sequência não reconhecida",
+        "Erro identificando identificador",
         ""
     };
 
