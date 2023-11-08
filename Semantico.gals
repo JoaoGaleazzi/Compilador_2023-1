@@ -118,9 +118,9 @@ while = palavra_reservada: "while"
 <termo_>	
 <fator>
 #Grammar
-<programa> ::= fun main "{" <lista_de_instrucoes> "}" ;
+<programa> ::= #100 fun main "{" <lista_de_instrucoes> "}" #101 ;
 
-<lista_de_instrucoes> ::= <instrucao> ";"<instrucao_>;
+<lista_de_instrucoes> ::= <instrucao>  ";"<instrucao_>;
 
 <instrucao> ::= <declaracao_de_variaveis> <instrucao__> | <comando_entrada_dados> | <comando_saida_dados> | <comando_selecao> | <comando_repeticao>;
 <instrucao_> ::= <instrucao> ";" <instrucao_> | î;
@@ -147,7 +147,7 @@ while = palavra_reservada: "while"
 
 <comando_saida_dados> ::= out "(" <lista_expressoes> ")";
 
-<lista_expressoes> ::= <expressao> <lista_expressoes_>;
+<lista_expressoes> ::= <expressao> #102 <lista_expressoes_>;
 <lista_expressoes_> ::= "," <lista_expressoes> | î;
 
 <comando_selecao> ::= if "(" <expressao> ")" "{" <lista_de_comandos> "}" <comando_else>;
@@ -161,25 +161,25 @@ while = palavra_reservada: "while"
 <comando_repeat> ::= repeat "{" <lista_de_comandos> "}" while "(" <expressao> ")";
 
 <expressao>			::= <elemento> <expressao_>  ;
-<expressao_>			::= î | "&" <elemento> <expressao_> | "|" <elemento> <expressao_> ;
-<elemento>			::= <relacional> | true | false | "!" <elemento> ;
+<expressao_>			::= î | "&" <elemento> #103 <expressao_> | "|" <elemento> #104 <expressao_> ;
+<elemento>			::= <relacional> | true #105 | false #106 | "!" <elemento> #107	;
 
 <relacional>			::= <aritmetica> <relacional_> ;
-<relacional_>			::= î | <operador_relacional> <aritmetica> ;
+<relacional_>			::= î | <operador_relacional> #108 <aritmetica> #109 ;
 <operador_relacional>	::= "==" | "!=" | "<" | ">" ;
 
 <aritmetica>			::= <termo> <aritmetica_>  ;
-<aritmetica_>			::= î | "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> ;
+<aritmetica_>			::= î | "+" <termo> #110 <aritmetica_> | "-" <termo> #111 <aritmetica_> ;
 
 <termo>			::= <fator> <termo_> ;
-<termo_>			::= î | "*" <fator> <termo_> | "/" <fator> <termo_> ;
+<termo_>			::= î | "*" <fator> #112 <termo_> | "/" <fator> #113 <termo_> ;
 
 <fator>			::= identificador | 
-			    	    constante_int | 
-		   	    	    constante_float | 
-			    	    constante_string | 
+			    	    constante_int #114 | 
+		   	    	    constante_float #115 | 
+			    	    constante_string #116 | 
 		   	    	    "(" <expressao> ")" |
 	    	  	    	    "+" <fator> | 
-	    		    	    "-" <fator> ;
+	    		    	    "-" <fator> #117;
 
 
