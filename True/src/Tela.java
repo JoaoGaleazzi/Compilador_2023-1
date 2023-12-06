@@ -1,5 +1,11 @@
+import resources.*;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,11 +14,9 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,9 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Color;
 
 public class Tela extends JFrame {
 	private String textoCopiado = "";
@@ -192,6 +193,29 @@ public class Tela extends JFrame {
 		btnRecortar.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
 		JButton btnCompilar = new JButton("Compilar [F7]");
+		btnCompilar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String texto = txtaEditor.getText();
+                
+				Lexico lexico = new Lexico();
+				Sintatico sintatico = new Sintatico();
+				Semantico semantico = new Semantico();
+
+				lexico.setInput( texto );
+
+				try{
+					sintatico.parse(lexico, semantico);
+                    txtaMensagens.setText("Programa compilado com sucesso");
+				}catch ( LexicalError ex ){
+					String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
+                    txtaMensagens.setText("Erro na linha - " + ex.getMessage());
+				}catch ( SyntaticError ex ){
+		     		System.out.println(ex.getPosition() + " símbolo encontrado: na entrada " + ex.getMessage()); 	
+				}catch ( SemanticError ex ){
+					
+				}
+			}
+		});
 		btnCompilar.setBounds(616, 0, 99, 60);
 		btnCompilar.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
