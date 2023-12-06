@@ -196,6 +196,11 @@ public class Tela extends JFrame {
 		btnCompilar.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		
 		JButton btnEquipe = new JButton("Equipe [F1]");
+		btnEquipe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtaMensagens.setText("Equipe: Joao Galeazzi & Matheus Soares Cardoso");
+			}
+		});
 		btnEquipe.setBounds(721, 0, 89, 60);
 		btnEquipe.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		painelBarraDeFerramentas.setLayout(null);
