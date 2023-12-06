@@ -5,9 +5,10 @@ Language = Java
 ScannerName = Lexico
 ParserName = Sintatico
 SemanticName = Semantico
+Package = resources
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = Stream
+Input = String
 Parser = LL
 #RegularDefinitions
 
@@ -123,13 +124,22 @@ while = palavra_reservada: "while"
 <lista_de_instrucoes> ::= <instrucao>  ";"<instrucao_>;
 
 <instrucao> ::= <declaracao_de_variaveis> <instrucao__> | <comando_entrada_dados> | <comando_saida_dados> | <comando_selecao> | <comando_repeticao>;
+<<<<<<< HEAD
+<instrucao_> ::= <instrucao> ";" <instrucao_> | Ã®;
+<instrucao__> ::= <declaracao_de_constante> #126 | "=" <expressao> #128|#127 Ã®;
+=======
 <instrucao_> ::= <instrucao> ";" <instrucao_> | î;
 <instrucao__> ::= <declaracao_de_constante> #126 | "=" <expressao> #128|#127 î;
+>>>>>>> main
 
 <declaracao_de_constante> ::= ":" <valor>;
 
 <lista_de_identificadores> ::= identificador #125 <lista_de_identificadores_>;
+<<<<<<< HEAD
+<lista_de_identificadores_> ::= "," identificador <lista_de_identificadores_> | Ã®;
+=======
 <lista_de_identificadores_> ::= "," identificador <lista_de_identificadores_> | î;
+>>>>>>> main
 
 <valor> ::= constante_int | constante_float | constante_string | true | false;
 
@@ -142,25 +152,51 @@ while = palavra_reservada: "while"
 <comando_entrada_dados> ::= in "(" <lista_entrada> ")";
 
 <lista_entrada> ::= <lista_entrada_> <lista_de_identificadores> #129 <lista_entrada__>;
+<<<<<<< HEAD
+<lista_entrada_> ::= constante_string #130 "," | Ã®;
+<lista_entrada__> ::= ";" <lista_entrada> | Ã®;
+=======
 <lista_entrada_> ::= constante_string #130 "," | î;
 <lista_entrada__> ::= ";" <lista_entrada> | î;
+>>>>>>> main
 
 <comando_saida_dados> ::= out "(" <lista_expressoes> ")";
 
 <lista_expressoes> ::= <expressao> #102 <lista_expressoes_>;
+<<<<<<< HEAD
+<lista_expressoes_> ::= "," <lista_expressoes> | Ã®;
+
+<comando_selecao> ::= if "(" <expressao> ")" #118 "{" <lista_de_comandos> "}" <comando_else> #119;
+<comando_else> ::= #120 else "{" <lista_de_comandos> "}" | Ã®;
+=======
 <lista_expressoes_> ::= "," <lista_expressoes> | î;
 
 <comando_selecao> ::= if "(" <expressao> ")" #118 "{" <lista_de_comandos> "}" <comando_else> #119;
 <comando_else> ::= #120 else "{" <lista_de_comandos> "}" | î;
+>>>>>>> main
 
 <lista_de_comandos> ::= <comando> ";" <lista_de_comandos_>;
-<lista_de_comandos_> ::= <lista_de_comandos> | î;
+<lista_de_comandos_> ::= <lista_de_comandos> | Ã®;
 
 <comando_repeticao> ::= <comando_while> | <comando_repeat>;
 <comando_while> ::= #121 while "(" <expressao> ")" #122 do "{" <lista_de_comandos> "}" #123;
 <comando_repeat> ::= #121 repeat "{" <lista_de_comandos> "}" while "(" <expressao> ")" #124;
 
 <expressao>			::= <elemento> <expressao_>  ;
+<<<<<<< HEAD
+<expressao_>			::= Ã® | "&" <elemento> #103 <expressao_> | "|" <elemento> #104 <expressao_> ;
+<elemento>			::= <relacional> | true #105 | false #106 | "!" <elemento> #107	;
+
+<relacional>			::= <aritmetica> <relacional_> ;
+<relacional_>			::= Ã® | <operador_relacional> #108 <aritmetica> #109 ;
+<operador_relacional>	::= "==" | "!=" | "<" | ">" ;
+
+<aritmetica>			::= <termo> <aritmetica_>  ;
+<aritmetica_>			::= Ã® | "+" <termo> #110 <aritmetica_> | "-" <termo> #111 <aritmetica_> ;
+
+<termo>			::= <fator> <termo_> ;
+<termo_>			::= Ã® | "*" <fator> #112 <termo_> | "/" <fator> #113 <termo_> ;
+=======
 <expressao_>			::= î | "&" <elemento> #103 <expressao_> | "|" <elemento> #104 <expressao_> ;
 <elemento>			::= <relacional> | true #105 | false #106 | "!" <elemento> #107	;
 
@@ -173,6 +209,7 @@ while = palavra_reservada: "while"
 
 <termo>			::= <fator> <termo_> ;
 <termo_>			::= î | "*" <fator> #112 <termo_> | "/" <fator> #113 <termo_> ;
+>>>>>>> main
 
 <fator>			::= identificador #131| 
 			    	    constante_int #114 | 

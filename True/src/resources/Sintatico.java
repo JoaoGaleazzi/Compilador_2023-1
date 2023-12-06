@@ -1,3 +1,5 @@
+package resources;
+
 import java.util.Stack;
 
 public class Sintatico implements Constants

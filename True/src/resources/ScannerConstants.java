@@ -1,3 +1,5 @@
+package resources;
+
 public interface ScannerConstants
 {
     int[] SCANNER_TABLE_INDEXES = 
@@ -1060,7 +1062,7 @@ public interface ScannerConstants
 
     String[] SCANNER_ERROR =
     {
-        "Caractere n„o esperado",
+        "Caractere n√£o esperado",
         "",
         "",
         "Erro identificando constante_string",
