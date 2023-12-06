@@ -1,3 +1,4 @@
+package resources;
 public interface ScannerConstants
 {
     int[] SCANNER_TABLE_INDEXES = 

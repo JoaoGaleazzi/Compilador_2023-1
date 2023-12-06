@@ -1,3 +1,4 @@
+package resources;
 public class Token
 {
     private int id;
