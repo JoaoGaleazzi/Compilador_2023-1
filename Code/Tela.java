@@ -179,7 +179,8 @@ public class Tela extends JFrame {
 		
 				catch ( LexicalError ex )
 				{
-					//Trata erros léxicos, conforme especificação da parte 2 - do compilador
+					String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
+                    txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
 				}
 				catch ( SyntaticError ex )
 				{
