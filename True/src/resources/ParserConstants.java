@@ -168,8 +168,8 @@ public interface ParserConstants
         "Era esperado \"+\"",
         "Era esperado \"-\"",
         "Era esperado \"*\"",
-        "Era esperado \"/\"",
-        "<programa> inválido",
+        "Era esperado \"/\""
+        /*"<programa> inválido",
         "<lista_de_instrucoes> inválido",
         "<instrucao> inválido",
         "<instrucao_> inválido",
@@ -205,6 +205,6 @@ public interface ParserConstants
         "<aritmetica_> inválido",
         "<termo> inválido",
         "<termo_> inválido",
-        "<fator> inválido"
+        "<fator> inválido"*/
     };
 }

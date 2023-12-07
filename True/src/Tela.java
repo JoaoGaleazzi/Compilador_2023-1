@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class Tela extends JFrame {
 	private String textoCopiado = "";
@@ -208,11 +209,15 @@ public class Tela extends JFrame {
                     txtaMensagens.setText("Programa compilado com sucesso");
 				}catch ( LexicalError ex ){
 					String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
-                    txtaMensagens.setText("Erro na linha - " + ex.getMessage());
+                    txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
 				}catch ( SyntaticError ex ){
-		     		System.out.println(ex.getPosition() + " símbolo encontrado: na entrada " + ex.getMessage()); 	
+					String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
+                    txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
 				}catch ( SemanticError ex ){
-					
+					String textoLido = txtaEditor.getText().substring(0, ex.getPosition());
+                    txtaMensagens.setText("Erro na linha" + (contarOcorrencias(textoLido, "\n") + 1) + " - " + ex.getMessage());
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					txtaMensagens.setText(ex.getMessage());
 				}
 			}
 		});
@@ -237,5 +242,10 @@ public class Tela extends JFrame {
 		painelBarraDeFerramentas.add(btnCompilar);
 		painelBarraDeFerramentas.add(btnEquipe);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	private long contarOcorrencias(String Texto, String alvo) {
+	    
+	    return Pattern.compile(alvo).matcher(Texto).results().count();
 	}
 }
